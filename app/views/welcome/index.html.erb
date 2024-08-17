@@ -1,0 +1,6 @@
+<h1>bienvenue</h1>
+<p>va sur google</p>
+<%=form_with url: welcome_google_path, html:{method: :get} do |f|%>
+  <%=f.text_field :s%>
+  <%=f.submit "aller"%>
+  <%end%>
