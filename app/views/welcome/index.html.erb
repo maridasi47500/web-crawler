@@ -4,3 +4,16 @@
   <%=f.text_field :s%>
   <%=f.submit "aller"%>
   <%end%>
+<%=form_with url: welcome_google_path, html:{method: :get} do |f|%>
+  <%=f.text_field :s, value: "dernier episode ma serie tv #{l(Date.today, format: :long)}"%>
+  <%=f.submit "voir dernier episode"%>
+  <%end%>
+<%=form_with url: welcome_google_path, html:{method: :get} do |f|%>
+  <%=f.text_field :s, value: "billet train ma ville #{l(Date.today, format: :long)}"%>
+  <%=f.submit "voir billets de train"%>
+  <%end%>
+<%=form_with url: welcome_google_path, html:{method: :get} do |f|%>
+  <%=f.hidden_field :image, value: "true"%>
+  <%=f.text_field :s, value: "rubies stone rouge"%>
+  <%=f.submit "voir rubies"%>
+  <%end%>
