@@ -5,16 +5,17 @@ from geopy.geocoders import Nominatim
 # Création d'un objet géocodeur Nominatim
 
 class Scriptruby:
-    def __init__(self,name,job,lieu,rayon):
+    def __init__(self,name,job,lat,lon,rayon):
         self.name=name
         self.job=job
-        self.lieu=lieu
+        self.lat=lat
+        self.lon=lon
         self.rayon=rayon
     def lancer(self):
         geolocator = Nominatim(user_agent="my_geocoder")
          
         # Géocodage d'une adresse
-        location = geolocator.geocode(self.lieu)
+        location = geolocator.reverse(str(self.lat)+","+str(self.lon))
         print(location.raw)
          
         # Affichage des informations de localisation

@@ -121,7 +121,14 @@ class Route():
     def voirsearch(self,params={}):
         getparams=("id",)
         myparam=self.get_this_route_param(getparams,params)
-        self.render_figure.set_param("ad",self.db.Search.getbyid(myparam["id"]))
+        somesearch=self.db.Search.getbyid(myparam["id"])
+        self.render_figure.set_param("ad",self.somesearch)
+        try:
+            print("ad",myparams["ad"],myparams["lieu"])
+            haha=self.scriptruby("ad",somesearch["name"],somesearch["lat"],somesearch["lon"],somesearch["rayon"]).lancer()
+        except Exception as e:
+            print(e)
+        print(ok,"OHHHHHHH EHHHHHH")
         return self.render_figure.render_figure("welcome/voirad.html")
     def voirtoutcequejaiajoute(self,data):
 
