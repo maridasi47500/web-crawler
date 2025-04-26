@@ -84,9 +84,9 @@ class Route():
     def createsearch(self,params={}):
         myparams=self.get_post_data()(params=("mysearch","name","lat","lon","description",))
         ad=self.db.Search.create(myparams)
-        if ad["ad_id"]:
+        if ad["search_id"]:
           self.set_notice(ad["notice"])
-          self.set_json("{\"redirect\":\"/voirsearch/"+ad["ad_id"]+"\"}")
+          self.set_json("{\"redirect\":\"/voirsearch/"+ad["search_id"]+"\"}")
         else:
           self.set_json("{\"redirect\":\"/\"}")
         return self.render_figure.render_json()
@@ -103,7 +103,6 @@ class Route():
             haha=self.scriptruby("ad",myparams["ad"],myparams["lieu"],myparams["rayon"]).lancer()
         except Exception as e:
             print(e)
-        print(ok,"OHHHHHHH EHHHHHH")
         return self.render_figure.render_figure("welcome/searchad.html")
     def searchad(self,params={}):
         print("yay")
@@ -113,22 +112,21 @@ class Route():
         self.render_figure.set_param("ads",ok["rows"])
         self.render_figure.set_param("message",ok["message"])
         return self.render_figure.render_figure("welcome/searchad.html")
-    def newsearch(self,search={}):
+    def newsearch(self,params={}):
         getparams=("name",)
         myparam=self.get_this_route_param(getparams,params)
         self.render_figure.set_param("myname",myparam["name"])
-        return self.render_figure.render_figure("welcome/newad.html")
+        return self.render_figure.render_figure("welcome/newsearch.html")
     def voirsearch(self,params={}):
         getparams=("id",)
         myparam=self.get_this_route_param(getparams,params)
         somesearch=self.db.Search.getbyid(myparam["id"])
-        self.render_figure.set_param("ad",self.somesearch)
+        self.render_figure.set_param("ad",somesearch)
         try:
             print("ad",myparams["ad"],myparams["lieu"])
             haha=self.scriptruby("ad",somesearch["name"],somesearch["lat"],somesearch["lon"],somesearch["rayon"]).lancer()
         except Exception as e:
             print(e)
-        print(ok,"OHHHHHHH EHHHHHH")
         return self.render_figure.render_figure("welcome/voirad.html")
     def voirtoutcequejaiajoute(self,data):
 
@@ -185,8 +183,8 @@ class Route():
             ROUTES={
 
 
-                    "^/mysearch/([a-b]+)$":self.newsearch,
-                    "^/voirsearch/([a-b]+)$":self.voirsearch,
+                    "^/mysearch/([a-z]+)$":self.newsearch,
+                    "^/voirsearch/([0-9]+)$":self.voirsearch,
                     '^/createsearch$': self.createsearch,
                     '^/toutcequejaiajoute$': self.voirtoutcequejaiajoute,
                     '^/allscript$': self.allscript,
